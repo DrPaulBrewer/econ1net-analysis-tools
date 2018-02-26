@@ -1,0 +1,21 @@
+#!/bin/bash -e
+# Copyright 2018 Paul Brewer Economic and Financial Technology Consulting LLC
+# This script consolidates a collection of csv files in subdirectories ./00
+# ./01 ./02 ... into a set of consolidated csv files in ./consolidated
+# The script is intentionally single-threaded to avoid storage contention
+FIRSTDIR=./00
+DESTDIR=./consolidated
+CASEDIRS=[0-9][0-9]
+CSVS=$(cd $FIRSTDIR; echo *csv)
+mkdir -p $DESTDIR
+for csv in $CSVS
+do (
+    head -1 $FIRSTDIR/$csv > $DESTDIR/$csv
+    for dir in $CASEDIRS;
+    do
+	tail -n "+2" $dir/$csv >> $DESTDIR/$csv
+    done
+)
+done
+
+
