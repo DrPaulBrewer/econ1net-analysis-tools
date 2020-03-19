@@ -21,7 +21,7 @@ nSellers = int(sellers)
 df = pd.read_csv(pathToProfitCSV)
 print len(df.columns)
 for a in range(1,nBuyers+nSellers+1):
-    agentname = "Buyer "+str(a) if (a<=nBuyers) else "Seller "+str(a-20)
+    agentname = "Buyer "+str(a) if (a<=nBuyers) else "Seller "+str(a-nBuyers)
     colname = "y"+str(a)
     df2 = df.groupby("caseid")[colname]
     def stat(p):
@@ -35,5 +35,3 @@ for a in range(1,nBuyers+nSellers+1):
     print
     print df3.to_csv(sep=",")
     print
-    
-
